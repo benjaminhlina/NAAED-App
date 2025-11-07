@@ -1,0 +1,54 @@
+raw_names,nice_names
+pi_name,PI Name
+date_time,Date Time
+month,Month
+year,Year
+common_name,Common Name
+scientific_name,Scientific Name
+genus,Genus
+tribe,Tribe
+subfamily,Subfamily
+family,Family
+superfamily,Superfamily
+suborder,Suborder
+order_sci,Order
+superorder,Superorder
+class_sci,Class
+superclass,Superclass
+tsn,TSN Code
+sex,Sex
+lifestage,Life Stage
+wild_lab,Wild/Lab
+age,Age (yrs)
+weight,Weight
+composite,Composite
+composite_n,Composite (n)
+tissue_type,Tissue Type
+sample_procedure,Sampling Procedure
+trt_description,Treatment Description
+length_mm,Length (mm)
+lenght_type,Length Type
+location,Location
+waterbody,Waterbody
+area,Area
+site,Site
+site_depth,Site Depth (m)
+latitude,Latitude
+longitude,Longitude
+calorimetry_method,Calorimetry Method
+calorimeter_conversion_factor,Conversion Factor
+sample_weight,Sample Weight
+sample_weight_type,Weight Type
+energy_measurement,Energy Density
+energy_units,Units
+energy_type,Measurement Type
+percent_water,Percent Water (%)
+percent_ash,Percent Ash (%)
+percent_lipid,Percent Lipid (%)
+percent_protein,Percent Protein (%)
+percent_carbon,Percent Carbon (%)
+percent_nitrogen,Percent Nitrogen (%)
+d13c,\U03B4<sup>13</sup>C
+d15n,\U03B4<sup>15</sup>N
+d34s,\U03B4<sup>34</sup>S
+c_n_ratio,C:N
