@@ -42,3 +42,36 @@ summary_sidebar_ui <- function(id) {
     )
   )
 }
+
+
+summary_sidebar_server <- function(id, con, main_input) {
+  moduleServer(id, function(input, output, session) {
+
+    observe({
+
+      df <- get_summary_data(con, get_selected_table(main_input))
+      grouping_choices <- get_good_groups(df)
+
+      cat("\n[DEBUG] Updating dropdowns...\n")
+      # df is summary data
+      cat("[DEBUG] Waterbody unique values:", length(unique(df$Waterbody)), "\n")
+      cat("[DEBUG] Species unique values:", length(unique(df$`Common Name`)), "\n")
+      # Grouping Variables: Allow dynamic selection
+
+
+      updateSelectInput(session, "summary_grouping_vars",
+                        choices = grouping_choices,
+                        selected = c("Waterbody",
+                                     "Common Name")
+      )
+      updateSelectInput(session, "summary_waterbody_filter",
+                        choices = c("All", sort(unique(df$Waterbody))),
+                        selected = "All")
+
+      # Species Drop-down
+      updateSelectInput(session, "summary_species_filter",
+                        choices = c("All", sort(unique(df$`Common Name`))),
+                        selected = "All")
+    })
+  })
+}
