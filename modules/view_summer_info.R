@@ -30,25 +30,24 @@ view_summary_info_ui <- function(id) {
 # ----- summmary server --------
 summary_info_server <- function(id, con, main_input) {
   moduleServer(id, function(input, output, session) {
+    # ---- errrors -----
     cat("[DEBUG] summary_info_server initialized for ID:", id, "\n")
     cat("[DEBUG] con object class:", class(con), "\n")
 
+    # ---- namespaces
     ns <- session$ns
     # ----- first create summary datsa -----
     summary_data <- reactive({
       table_name <- get_selected_table(main_input)
-
+      # errors
       if (is.null(table_name) || is.na(table_name)) {
         cat("[DEBUG] table_name is NULL, Cannot run query.\n")
       } else {
         cat("[DEBUG] table_name from get_selected_table():", table_name, "\n")
       }
-
+      # db connections
       con_db <- if (inherits(con, "reactive")) con() else con
-      # req(table_name)
-      # con_db <- con
-      # con_db <- con_reactive()
-      # req(DBI::dbIsValid(con_db))
+      # ---- acctuat gert data =----
       get_summary_data(con = con_db, table_name)
     })
 
@@ -65,8 +64,11 @@ summary_info_server <- function(id, con, main_input) {
         print(names(df))
       }
     })
-    # ----- Dynamically Update Sidebar Dropdowns -----
-
+    numeric_cols <- reactive({
+      df <- summary_data()
+      req(df)
+      get_numeric_cols(df)
+    })
     # # ---- Generate Summary Statistics with Dynamic Grouping -----
     filtered_summary_df <- reactive({
       df <- summary_data()
@@ -92,14 +94,15 @@ summary_info_server <- function(id, con, main_input) {
     # })
 
     filtered_summary <- reactive({
+
       df <- filtered_summary_df()  # Use the filtered data
-      # req(df, input$summary_grouping_vars)
-      # req(input$summary_y_variable)
+
+
       # ------ Dynamically group data -----
       summary_grouping_vars <- input$summary_grouping_vars
-      summary_numeric_cols <- numeric_cols()  # Now calling the reactive expression
+      summary_numeric_cols <- numeric_cols()
+      # Now calling the reactive expression
       # Ensure numeric columns exist and remove ids
-      summary_numeric_cols <- names(df)[sapply(df, is.numeric)]
       summary_numeric_cols <- setdiff(summary_numeric_cols,
                                       c("sample_id",
                                         "source_id",
@@ -108,13 +111,9 @@ summary_info_server <- function(id, con, main_input) {
                                         "iso_id",
                                         "Conversion Factor",
                                         "Composite (n)"))
+      cat("[DEBUG] Grouping by:", paste(input$summary_grouping_vars, collapse = ", "), "\n")
+      cat("[DEBUG] Summarizing variables:", paste(input$summary_y_variable, collapse = ", "), "\n")
 
-      # if (length(summary_grouping_vars) > 0) {
-      #   summary_df <- df %>%
-      #     group_by(across(all_of(summary_grouping_vars)))
-      # } else {
-      #   summary_df <- df
-      # }
 
       # create dynamic groupings and summary round all values to 2 decimials
 
