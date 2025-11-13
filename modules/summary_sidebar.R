@@ -51,6 +51,7 @@ summary_sidebar_server <- function(id, con, main_input) {
 
       df <- get_summary_data(con, get_selected_table(main_input))
       grouping_choices <- get_good_groups(df)
+      numeric_choices <- get_numeric_cols(df)
 
       cat("\n[DEBUG] Updating dropdowns...\n")
       # df is summary data
@@ -72,6 +73,19 @@ summary_sidebar_server <- function(id, con, main_input) {
       updateSelectInput(session, "summary_species_filter",
                         choices = c("All", sort(unique(df$`Common Name`))),
                         selected = "All")
+
+
+        # Update histogram variable choices
+        updateSelectizeInput(session, "hist_var",
+                             choices = setNames(numeric_choices, numeric_choices),
+                             # selected = "test",
+                             server = TRUE)
+        # Update histogram variable choices
+        updateSelectizeInput(session, "summary_y_variable",
+                             choices = setNames(numeric_choices, numeric_choices),
+                             # selected = "test",
+                             server = TRUE)
+
     })
   })
 }
