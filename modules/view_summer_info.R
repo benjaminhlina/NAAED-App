@@ -193,6 +193,10 @@ summary_info_server <- function(id, con, main_input, sidebar_vals) {
       return(p)
     })
 
+    # we need to return fileted summary to then use in donload
+    return(list(
+      summary_data = filtered_summary
+    ))
 
   }
   )
