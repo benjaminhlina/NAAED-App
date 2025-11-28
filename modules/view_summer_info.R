@@ -194,66 +194,6 @@ summary_info_server <- function(id, con, main_input, sidebar_vals) {
     })
 
 
-    # # ---- add in histogram ----
-    # output$summary_histogram <- renderPlot({
-    #   # Get raw data (not summarized)
-    #   df <- filtered_summary_df()
-    #   req(df, nrow(df) > 0, input$hist_var)
-    #
-    #   # Ensure the selected column exists in the raw data
-    #   var <- input$hist_var
-    #   req(var %in% names(df))
-    #
-    #   # Remove NAs from the selected column
-    #   df <- df %>%
-    #     filter(!is.na(.data[[var]]))
-    #
-    #   nice_label <- get_nice_name(var)[[1]]
-    #
-    #   # Plot the histogram of the selected variable
-    #   p <- ggplot(data = df, aes(x = !!sym(var))) +
-    #     geom_histogram(fill = "#4DB6AC",
-    #                    color = "black") +
-    #     # facet_wrap(~ common_name) +
-    #     theme_bw(
-    #       base_size = 15
-    #     ) +
-    #     theme(
-    #       panel.grid = element_blank(),
-    #       plot.title = element_markdown(hjust = 0.5),
-    #       axis.title.x = element_markdown()
-    #     ) +
-    #     labs(
-    #       x = nice_label,
-    #       y = "Frequency",
-    #       title = paste("Histogram of", nice_label,
-    #                     "for", input$summary_species_filter)
-    #     )
-    #   p
-    # })
-
-    # # ---- Download Summary Table ----
-    # output$download_summary <- downloadHandler(
-    #   # dynamicaly create file name
-    #   filename <- function() {
-    #     paste0(input$summary_table, "_summary.xlsx")
-    #   },
-    #   # dynamically grob properly fillterd data
-    #   content <- function(file) {
-    #     df <- filtered_summary()
-    #     req(df)
-    #     # if df has nothing download_summary button will not work
-    #     is_disabled <- is.null(df) || nrow(df) == 0
-    #
-    #     shinyjs::toggleState("download_summary",
-    #                          condition = !is_disabled)
-    #     # create workbook, add sheets and write and svae workbook
-    #     wb <- openxlsx::createWorkbook()
-    #     openxlsx::addWorksheet(wb, "Summary Data")
-    #     openxlsx::writeData(wb, "Summary Data", df)
-    #     openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
-    #   }
-    # )
   }
   )
 }
