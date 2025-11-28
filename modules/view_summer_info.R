@@ -96,8 +96,7 @@ summary_info_server <- function(id, con, main_input, sidebar_vals) {
       summary_numeric_cols  <- numeric_cols()
       y_vals <- sidebar_vals$y_variable()
 
-      # req(length(summary_grouping_vars) > 0)
-      # req(input$summary_y_variable)
+
       if (is.null(y_vals) || length(y_vals) == 0) {
         # Return just the grouped counts
         summary_df <- df %>%
