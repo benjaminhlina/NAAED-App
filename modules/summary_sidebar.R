@@ -105,7 +105,7 @@ summary_sidebar_server <- function(id, con, main_input) {
     # make this into a function that sidebar exports out
     register_summary <- function(summary_info) {
       observe({
-        df <- summary_info$summary_data()  # <- reactive from summary_info
+        df <- summary_info$summary_data()  # reactive  from summary
         output$download_summary <- downloadHandler(
           filename = function() {
             tbl <- get_selected_table(main_input)
