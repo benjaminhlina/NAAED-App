@@ -34,18 +34,6 @@ scatter_sidebar_server <- function(id, con, main_input) {
       numeric_choices <- get_numeric_cols(df)
       req(df)
 
-
-      if ("tbl_calorimetry" %in% input$scatter_plots) {
-        if ("Units" %in% names(df)) {
-          df <- df %>%
-            mutate("Energy Density",
-                   ~ case_when(
-                     # Units == "cal/g" ~ .x * 4.184,
-                     Units == "Joules / g" ~ .x,
-                     TRUE ~ .x
-                   ))
-        }
-      }
       #       # Grouping Variables: Allow dynamic selection
       updateSelectInput(session, "scatter_grouping_vars",
                         choices = grouping_choices,
