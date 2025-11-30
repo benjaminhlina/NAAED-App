@@ -77,63 +77,6 @@ server <- function(input, output, session) {
   sidebar_vals$register_summary(summary_info)
 
 
-  # observe({
-  #   df <- summary_data()
-  #   req(df)
-  #
-  #   # if ("tbl_calorimetry" %in% input$selected_table) {
-  #   #   if ("Units" %in% names(df)) {
-  #   #     df <- df %>%
-  #   #       mutate("Energy Density",
-  #   #                     ~ case_when(
-  #   #                       # Units == "cal/g" ~ .x * 4.184,
-  #   #                       Units == "Joules / g" ~ .x,
-  #   #                       TRUE ~ .x
-  #   #                     )))
-  #   #   }
-  #   # }
-  #   # Grouping Variables: Allow dynamic selection
-  #   grouping_choices <- grouping_cols()
-  #
-  #   updateSelectInput(session, "scatter_grouping_vars",
-  #                     choices = grouping_choices,
-  #                     # selected = c("Waterbody",
-  #                     #              "Common Name")
-  #   )
-  #
-  #   # Waterbody Drop-down
-  #   updateSelectInput(session, "scatter_waterbody_filter",
-  #                     choices = c("All", sort(unique(df$Waterbody))),
-  #                     selected = "All")
-  #
-  #   # Species Drop-down
-  #   updateSelectInput(session, "scatter_species_filter",
-  #                     choices = c("All", sort(unique(df$`Common Name`))),
-  #                     selected = "All")
-  #   # Get numeric column choices
-  #   numeric_choices <- numeric_cols()
-  #
-  #   # Update histogram variable choices
-  #   updateSelectizeInput(session, "scatter_var",
-  #                        choices = setNames(numeric_choices, numeric_choices),
-  #                        # selected = "",
-  #                        server = TRUE)
-  #   # X Variable Options
-  #   x_choices <-c(
-  #     # "Total Length (mm)",
-  #     # "Fork Length (mm)",
-  #     "Weight")
-  #
-  #
-  #
-  #   x_choices <- x_choices[x_choices %in% names(df)]  # Ensure they exist
-  #
-  #   updateSelectInput(session, "x_var",
-  #                     choices = x_choices,
-  #                     selected = x_choices[1]
-  #   )
-  #
-  #
   # })
   # filtered_summary_dats <- reactive({
   #   df <- summary_data()
