@@ -68,13 +68,13 @@ server <- function(input, output, session) {
   # ---- upload data -----
   upload_data_server("insert_data", con)
   # ----- summary table -----
-  sidebar_vals <- summary_sidebar_server("summary_sidebar", con,
+  summary_sidebar_vals <- summary_sidebar_server("summary_sidebar", con,
                                          main_input = input)
 
   summary_info <- summary_info_server("summary_info", con, main_input = input,
-                      sidebar_vals = sidebar_vals )
+                      summary_sidebar_vals = summary_sidebar_vals)
 
-  sidebar_vals$register_summary(summary_info)
+  summary_sidebar_vals$register_summary(summary_info)
 
 
   # })
