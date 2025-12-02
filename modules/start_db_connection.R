@@ -10,4 +10,5 @@ con <- DBI::dbConnect(RPostgres::Postgres(),
                       host = "localhost",
                       port = 5433,
                       user = "postgres",
-                      password = rstudioapi::askForSecret("password"))
+                      password = askpass::askpass("Enter password:")
+                      )
