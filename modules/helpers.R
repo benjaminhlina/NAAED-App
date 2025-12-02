@@ -71,6 +71,18 @@ groups <- sort(intersect(names(df), good_groups))
 return(groups)
 }
 
+# ---- get length_vars ----
+get_length_vars <- function(df) {
+  # Only keep non-NA length types
+  length_types <- unique(df$length_type)
+  length_types <- length_types[!is.na(length_types)]
+
+  # Create synthetic variable names and labels
+  vars <- paste0("length_mm__", length_types)
+  labels <- paste0(stringr::str_to_title(length_types), " Length (mm)")
+
+  setNames(vars, labels)  # names = labels, values = synthetic variable codes
+}
 # ----- get nice names -----
 get_nice_name <- function(cols, lookup = nice_name_lookup) {
   unname(sapply(cols, function(col) {
