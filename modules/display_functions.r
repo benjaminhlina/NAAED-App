@@ -27,29 +27,46 @@ display_hist <- function(data,
   output[[output_id]] <- renderPlot({
     # Get raw data (not summarized)
     df <- data()
-
+    req(df, nrow(df) > 0)
     # Ensure the selected column exists in the raw data
     var <- input_source$hist_vars()
-    req(df, nrow(df) > 0, var)
-    req(var %in% names(df))
 
+    # ---- HANDLE LENGTH TYPES ----
+    length_map <- c(
+      "Fork Length (mm)" = "Fork",
+      "Total Length (mm)" = "Total",
+      "Standard Length (mm)"= "Standard"
+    )
 
-    if (var %in% unique(df$length_type)) {
-      var <- "Length (mm)"
+    if (var %in% names(length_map)) {
+
+      # Convert UI label → length_type value
+      length_type_val <- length_map[[var]]
+
+      req("Length (mm)" %in% names(df))
+      req("length_type" %in% names(df))
+
       df <- df |>
-        filter(length_type == var)
-    } else {
-      var <- var
+        filter(length_type == length_type_val) |>
+        mutate(`Length (mm)`= suppressWarnings(as.numeric(`Length (mm)`))) |>
+        filter(!is.na(`Length (mm)`))
+
+      var <- "Length (mm)"
+      nice_label <- var
+
+    }  else {
+
+      # ---- NON-LENGTH VARIABLES ----
+      req(var %in% names(df))
+      df <- df |>
+        mutate(across(all_of(var), ~ suppressWarnings(as.numeric(.)))) |>
+        filter(!is.na(.data[[var]]))
+
+      nice_label <- get_nice_name(var)[[1]]
     }
 
-    req(var %in% names(df))
-
-    df <- df |>
-      mutate(across(all_of(var), ~ suppressWarnings(as.numeric(.)))) |>
-      filter(!is.na(.data[[var]]))
-
-
     species_f <- input_source$species_filter()
+    waterbody_f <- input_source$waterbody_filter()
     # Remove NAs from the selected column
     # df <- df %>%
     #   filter(!is.na(.data[[var]]))
@@ -73,9 +90,12 @@ display_hist <- function(data,
         x = nice_label,
         y = "Frequency",
         title = paste("Histogram of", nice_label,
-                      "for", species_f)
+                      "for", species_f, "in", waterbody_f)
       )
     return(p)
   })
 
 }
+
+
+
