@@ -22,11 +22,6 @@ scatter_plot_server <- function(id, con, main_input, scatter_sidebar_vals) {
 
 
 
-    numeric_cols <- reactive({
-      df <- scatter_data()
-      req(df)
-      get_numeric_cols(df)
-    })
 
     filtered_scatter_df <- reactive({
       df <- scatter_data()
@@ -134,6 +129,7 @@ scatter_plot_server <- function(id, con, main_input, scatter_sidebar_vals) {
       table_name_reactive = scatter_sidebar_vals$selected_table
     )
     check_summary_data(scatter_data)
+    numeric_cols <- create_numeric_col(data = scatter_data)
   }
   )
 }
