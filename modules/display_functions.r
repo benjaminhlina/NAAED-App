@@ -31,30 +31,36 @@ display_hist <- function(data,
     # Ensure the selected column exists in the raw data
     var <- input_source$hist_vars()
 
-    # ---- HANDLE LENGTH TYPES ----
-    length_map <- c(
-      "Fork Length (mm)" = "Fork",
-      "Total Length (mm)" = "Total",
-      "Standard Length (mm)"= "Standard"
-    )
+    # detect length-type UI choices
+    is_length <- grepl("length", var, ignore.case = TRUE) &&
+      !var %in% names(df)
 
-    if (var %in% names(length_map)) {
+    if (is_length) {
 
-      # Convert UI label → length_type value
-      length_type_val <- length_map[[var]]
-
+      # Convert UI label to the length_type in the data
+      length_type_val <- case_when(
+        grepl("fork", var, ignore.case = TRUE) ~ "fork",
+        grepl("total", var, ignore.case = TRUE) ~ "total",
+        grepl("standard", var, ignore.case = TRUE) ~ "standard",
+        TRUE ~ NA_character_
+      )
+      cli::cli_alert_info("UI var: {var}")
+      cli::cli_alert_info("Mapped length_type_val: {length_type_val}")
+      cli::cli_alert_info(
+        "Unique df$length_type: {paste(unique(df$length_type), collapse=', ')}")
+      req(!is.na(length_type_val))
       req("Length (mm)" %in% names(df))
       req("length_type" %in% names(df))
 
       df <- df |>
         filter(length_type == length_type_val) |>
-        mutate(`Length (mm)`= suppressWarnings(as.numeric(`Length (mm)`))) |>
+        mutate(`Length (mm)` = suppressWarnings(as.numeric(`Length (mm)`))) |>
         filter(!is.na(`Length (mm)`))
 
       var <- "Length (mm)"
       nice_label <- var
 
-    }  else {
+    } else {
 
       # ---- NON-LENGTH VARIABLES ----
       req(var %in% names(df))
