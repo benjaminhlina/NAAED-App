@@ -128,7 +128,7 @@ get_summary_data <- function(con, table_name) {
     return(data.frame(Message = "Error retrieving data from database."))
   })
   #
-  df <- df %>%
+  df <- df |>
     mutate(
       year = as.character(year),
       month = as.character(month),
