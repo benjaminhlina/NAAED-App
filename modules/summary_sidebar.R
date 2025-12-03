@@ -75,9 +75,13 @@ summary_sidebar_server <- function(id, con, main_input) {
       grouping_choices <- get_good_groups(df)
       numeric_choices <- get_numeric_cols(df)
 
+      numeric_choices <- setdiff(numeric_choices, "Length (mm)")
       length_vars <- get_length_vars(df)
 
 
+      summary_choices <- sort(c(setNames(numeric_choices,
+                                         numeric_choices),
+                           length_vars))
       cat("\n[DEBUG] Updating dropdowns...\n")
       # df is summary data
       cat("[DEBUG] Waterbody unique values:", length(unique(df$Waterbody)), "\n")
@@ -105,9 +109,7 @@ summary_sidebar_server <- function(id, con, main_input) {
 
       # Update y summary  variable choices
       updateSelectizeInput(session, "summary_y_variable",
-                           choices = c(setNames(numeric_choices,
-                                                numeric_choices),
-                                       length_vars),
+                           choices = summary_choices,
                            server = TRUE)
       # Update histogram variable choices
       updateSelectizeInput(session, "hist_var",
