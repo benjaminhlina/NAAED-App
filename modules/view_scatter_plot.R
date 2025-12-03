@@ -14,9 +14,6 @@ view_scatter_plot_ui <- function(id) {
 scatter_plot_server <- function(id, con, main_input, scatter_sidebar_vals) {
   moduleServer(id, function(input, output, session) {
 
-    cat("[DEBUG] summary_info_server initialized for ID:", id, "\n")
-    cat("[DEBUG] con object class:", class(con), "\n")
-
     # ---- namespaces
     ns <- session$ns
 
