@@ -48,7 +48,8 @@ create_mean_data <- function(input_source,
       # Return just the grouped counts
       summary_df <- df |>
         group_by(across(all_of(summary_grouping_vars))) |>
-        summarise(n = n(), .groups = "drop")
+        summarise(n = n(), .groups = "drop") |>
+        ungroup()
       return(summary_df)
     }
 
@@ -60,50 +61,58 @@ create_mean_data <- function(input_source,
 
     if (nrow(df) == 0) return(df)
 
-    mapped_vars <- lapply(y_vals, function(v)
-      fix_var_generic(df, v, get_nice_name))
+    summary_list <- lapply(y_vals, function(v) {
+      mapped_var <- fix_var_generic(df, v, get_nice_name)
+      df_filtered <- mapped_var$df
+      var_to_summarise <- mapped_var$var
+      var_label <- mapped_var$var_label
 
-    for (m in mapped_vars) {
-      df <- m$df
-    }
+      # Check if variable exists after filtering
+      if (nrow(df_filtered) == 0 || !var_to_summarise %in% names(df_filtered)) {
+        return(NULL)
+      }
 
-    # df <- Reduce(function(d1, d2)
-    #   dplyr::intersect(d1, d2), lapply(mapped_vars, `[[`, "df"))
+      summary_df <- df_filtered |>
+        group_by(across(all_of(summary_grouping_vars))) |>
+        summarise(
+          n = n(),
+          !!paste0(var_label, " (mean)") := mean(.data[[var_to_summarise]],
+                                                 na.rm = TRUE),
+          !!paste0(var_label, " (sd)") := sd(.data[[var_to_summarise]],
+                                             na.rm = TRUE),
+          .groups = "drop"
+        ) |>
+        mutate(across(where(is.numeric), ~ round(.x, 2)))
+      return(summary_df)
+    })
 
-    vars_to_summarise <- unique(sapply(mapped_vars, `[[`, "var"))
-    # vars_to_summarise <- intersect(y_vals, summary_numeric_cols)
+    # Remove NULL results
+    summary_list <- summary_list[!sapply(summary_list, is.null)]
+    req(length(summary_list) > 0)
+    # Combine all summaries by joining on grouping vars
+    summary_df <- Reduce(function(x, y) {
+      full_join(x, y, by = summary_grouping_vars)
+    }, summary_list)
 
-    req(length(vars_to_summarise) > 0)
-
-
-
-    summary_df <- df |>
-      group_by(across(all_of(summary_grouping_vars))) |>
-      summarise(
-        n = n(),
-        across(
-          all_of(vars_to_summarise),
-          list(mean = ~ mean(.x, na.rm = TRUE),
-               sd = ~ sd(.x, na.rm = TRUE)),
-          .names = "{.col} ({.fn})"
-        ),
-        .groups = "drop"
-      ) |>
-      mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-
-    nice_labels <- sapply(mapped_vars, `[[`, "var_label")
-
-    for (i in seq_along(vars_to_summarise)) {
+    # Combine 'n' columns if multiple exist
+    n_cols <- grep("^n($|\\.)", names(summary_df), value = TRUE)
+    if (length(n_cols) > 1) {
+      # Multiple n columns exist, combine them
       summary_df <- summary_df |>
-        rename_with(~ gsub(vars_to_summarise[i],
-                           nice_labels[i], .x, fixed = TRUE),
-                    starts_with(vars_to_summarise[i]))
+        mutate(n_combined = rowSums(across(all_of(n_cols)), na.rm = TRUE)) |>
+        select(-all_of(n_cols)) |>
+        rename(n = n_combined) |>
+        relocate(n, .after = all_of(summary_grouping_vars))
+    } else if (length(n_cols) == 1 && n_cols != "n") {
+      # Single n column but it's named n.x or similar, rename it
+      summary_df <- summary_df |>
+        rename(n = all_of(n_cols)) |>
+        relocate(n, .after = all_of(summary_grouping_vars))
     }
-
 
     return(summary_df)
   })
+
 }
 
 # ---- create numerical_col
