@@ -77,8 +77,7 @@ create_mean_data <- function(input_source,
                                              na.rm = TRUE),
           .groups = "drop"
         ) |>
-        mutate(across(where(is.numeric), ~ round(.x, 2))) |>
-        ungroup()
+        mutate(across(where(is.numeric), ~ round(.x, 2)))
       return(summary_df)
     })
 
