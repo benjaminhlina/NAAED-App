@@ -90,7 +90,7 @@ summary_sidebar_server <- function(id, con, main_input) {
         sort()
 
       # make console talk about what it is doing
-
+      # check_dropdowns()
       cli::cli_alert_success("Updating dropdowns")
       cli::cli_ul(c(
         "Waterbody unique values: {length(waterbody_choices)}",
