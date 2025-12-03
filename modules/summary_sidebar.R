@@ -91,14 +91,13 @@ summary_sidebar_server <- function(id, con, main_input) {
 
       # make console talk about what it is doing
 
-      cat("\n[DEBUG] Updating dropdowns...\n")
-
-      cat("[DEBUG] Waterbody unique values:", length(waterbody_choices), "\n")
-      cat("[DEBUG] Species unique values:", length(common_name_choices), "\n")
-      cat("[DEBUG] Grouping choices:",
-          paste(grouping_choices, collapse = ", "), "\n")
-      cat("[DEBUG] Numeric choices:", paste(numeric_choices,
-                                            collapse = ", "), "\n")
+      cli::cli_alert_success("Updating dropdowns")
+      cli::cli_ul(c(
+        "Waterbody unique values: {length(waterbody_choices)}",
+        "Species unique values: {length(common_name_choices)}",
+        "Grouping choices: {paste(grouping_choices, collapse = ', ')}",
+        "Numeric choices: {paste(numeric_choices, collapse = ', ')}"
+      ))
       # Grouping Variables: Allow dynamic selection
 
 
