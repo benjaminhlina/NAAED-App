@@ -2,17 +2,9 @@
 # ---- create fileted summary ----
 create_filtered_data <- function(input_source,
                                  data) {
-  # check_input_source(input_source_name)
 
   reactive({
-    # if (!exists(input_source_name, envir = parent.frame(2), inherits = TRUE)) {
-    #   cli::cli_abort(c(
-    #     "Object {.val {input_source_name}} does not exist",
-    #     "i" = "Make sure {.val {input_source_name}} is defined before using this reactive"
-    #   ))
-    # }
-    #
-    # input_source <- get(input_source_name, envir = parent.frame())
+
 
     df <- data()
 
