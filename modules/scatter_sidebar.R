@@ -93,7 +93,7 @@ scatter_sidebar_server <- function(id, con, main_input) {
                         selected = "All")
 
 
-      x_choices <- make_scatter_choices(df, numeric_choices, "x") |>
+      x_choices <- make_scatter_choices(df, numeric_choices) |>
         sort()
 
       x_choices_sel <- names(x_choices)[1]
@@ -103,7 +103,7 @@ scatter_sidebar_server <- function(id, con, main_input) {
                         selected = x_choices_sel)
 
       # Update scatter variable choices
-      y_choices <- make_scatter_choices(df, numeric_choices, "y") |>
+      y_choices <- make_scatter_choices(df, numeric_choices) |>
         sort()
 
       updateSelectizeInput(session, "scatter_var",
