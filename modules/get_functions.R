@@ -3,7 +3,7 @@ get_good_groups <- function(df) {
   good_groups <- c(
     "PI Name",
     "Month",
-    "Year",
+    "Sample Year",
     "Common Name",
     "Scientific Name",
     "Genus",
