@@ -27,23 +27,23 @@ upload_data_server <- function(id, con) {
       sheets <- readxl::excel_sheets(file_path)
 
       # Ensure required sheets exist
-      if (!("tbl_sample" %in% sheets) | !("tbl_location" %in% sheets)) {
+      if (!("tbl_samples" %in% sheets) | !("tbl_location" %in% sheets)) {
         output$upload_status <- renderUI({
-          p("Error: Missing required sheets (tbl_sample or tbl_location).",
+          p("Error: Missing required sheets (tbl_samples or tbl_location).",
             style = "color:red;")
         })
         return()
       }
 
       # Read the sheets into data frames
-      tbl_sample <- readxl::read_excel(file_path, sheet = "tbl_sample")
+      tbl_samples <- readxl::read_excel(file_path, sheet = "tbl_samples")
       tbl_location <- readxl::read_excel(file_path, sheet = "tbl_location")
 
 
       # Append to PostgreSQL database
       tryCatch({
         dbWriteTable(con,
-                     "tbl_sample",
+                     "tbl_samples",
                      tbl_sample,
                      append = TRUE,
                      row.names = FALSE)
