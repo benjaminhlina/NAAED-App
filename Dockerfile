@@ -2,16 +2,32 @@ FROM rocker/shiny:latest
 
 # Install system dependencies for R packages
 RUN apt-get update && apt-get install -y \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    libpq-dev \
-    libpq5 \
-    libudunits2-dev \
-    libgdal-dev \
-    libgeos-dev \
-    libproj-dev \
+    cmake \
+    g++ \
+    gdal-bin \
     git \
+    gfortran \
+    libabsl-dev \
+    libcairo2-dev \
+    libcurl4-openssl-dev \
+    libgeos-dev \
+    libgdal-dev \
+    libicu-dev \
+    libjpeg-dev \ 
+    libmysqlclient-dev \
+    libpng-dev \
+    libpq-dev \
+    libproj-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libtiff5-dev \
+    libudunits2-dev \
+    libxml2-dev \
+    libxt-dev \
+    make \
+    pandoc \
+    proj-bin \
+    proj-data \
     && rm -rf /var/lib/apt/lists/*
 
 # Install R packages
