@@ -35,9 +35,10 @@ RUN R -e "install.packages('pak', repos = 'https://cran.rstudio.com/')"
 
 # Install packages
 RUN R -e "pak::pkg_install(c(\ 
-    'DBI', 'dplyr','DT','ggplot2','ggtext', 'here', \
-    'plotly', 'readr','RPostgres','RPostgreSQL', \ 
-    'shiny', 'shinydashboard','shinyjs','shinymanager'\ 
+    'cli', 'DBI', 'dplyr','DT','ggplot2','ggtext', 'here', \
+    'plotly', 'pryr', 'readr', 'readxl', 'RPostgres','RPostgreSQL', \ 
+    'shiny', 'shinydashboard','shinyjs','shinymanager', \
+    'stringr', 'writexl'\ 
     ))"
     
 # Install geospatial packages separately (they're larger/slower)
