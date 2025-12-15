@@ -3,7 +3,7 @@ FROM rocker/shiny:latest
 # https://specs.opencontainers.org/image-spec/annotations/
 LABEL \
     org.opencontainers.image.authors="Benjamin Hlina <benjamin.hlina@gmail.com>" \
-    org.opencontainers.image.vendor="NAAED-App" \
+    org.opencontainers.image.vendor="naaed-app" \
     org.opencontainers.image.version="0.0.0.9999" \
     org.opencontainers.image.source="https://github.com/benjaminhlina/NAAED-App" \
     org.opencontainers.image.licenses="MIT"
