@@ -11,5 +11,5 @@ con <- DBI::dbConnect(RPostgres::Postgres(),
                       port = Sys.getenv("POSTGRES_PORT"),
                       user = Sys.getenv("POSTGRES_USER"),
                       password = Sys.getenv("POSTGRES_PASSWORD")
-                      # sslmode = "require"
+                      sslmode = 'require'
                       )
