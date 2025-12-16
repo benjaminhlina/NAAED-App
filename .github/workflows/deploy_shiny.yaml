@@ -40,6 +40,8 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          SHINY_USER: ${{ secrets.SHINY_USER }}
+          SHINY_PASSWORD: ${{ secrets.SHINY_PASSWORD }}
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_HOST} << EOF
@@ -63,6 +65,8 @@ jobs:
               -e POSTGRES_PORT="${{ secrets.POSTGRES_PORT }}" \
               -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
               -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+              -e SHINY_USER: ${{ secrets.SHINY_USER }} \
+              -e SHINY_PASSWORD: ${{ secrets.SHINY_PASSWORD }} \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             
             # Clean up old images
