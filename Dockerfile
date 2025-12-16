@@ -54,11 +54,12 @@ RUN  R -e "pak::pkg_install(c('leaflet', 'mapview', 'sf'))"
 
 # remove shiny-server template apps --- 
 RUN rm -rf /srv/shiny-server/*
+
 # Copy app files
-COPY app.R /srv/shiny-server/
-COPY www /srv/shiny-server/www
-COPY data /srv/shiny-server/data
-COPY modules /srv/shiny-server/modules
+COPY app.R /srv/shiny-server/NAAED-App/
+COPY www /srv/shiny-server/NAAED-App/www
+COPY data /srv/shiny-server/NAAED-App/data
+COPY modules /srv/shiny-server/NAAED-App/modules
 COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
 
 
