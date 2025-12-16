@@ -55,11 +55,10 @@ RUN  R -e "pak::pkg_install(c('leaflet', 'mapview', 'sf'))"
 # set wd 
 WORKDIR /app
 # Copy app files
-COPY app.R /srv/shiny-server/
-COPY www /srv/shiny-server/www
-COPY data /srv/shiny-server/data
-COPY modules /srv/shiny-server/modules
-COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
+COPY app.R /app
+COPY www /app/www
+COPY data /app/data
+COPY modules /app/modules
 
 
 RUN chown -R shiny:shiny /srv/shiny-server && \
