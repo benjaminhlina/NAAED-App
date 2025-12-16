@@ -1,9 +1,16 @@
-#!/bin/bash
-# Export env vars for shiny user
-export POSTGRES_HOST=${POSTGRES_HOST}
-export POSTGRES_USER=${POSTGRES_USER}
-export POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-export POSTGRES_DB=${POSTGRES_DB}
+#!/bin/sh
+set -e
+
+# Write env vars to shiny user's Renviron
+cat <<EOF > /home/shiny/.Renviron
+POSTGRES_HOST=${POSTGRES_HOST}
+POSTGRES_USER=${POSTGRES_USER}
+POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+POSTGRES_DB=${POSTGRES_DB}
+EOF
+
+chown shiny:shiny /home/shiny/.Renviron
+chmod 600 /home/shiny/.Renviron
 
 # Start Shiny Server
 exec shiny-server
