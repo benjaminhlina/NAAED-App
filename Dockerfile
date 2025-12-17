@@ -44,8 +44,8 @@ WORKDIR /srv/shiny-server
 # ---- ops for got to install renv ---- 
 RUN R -e "install.packages('renv', repos = 'https://cran.rstudio.com')"
 # ---- Copy renv files ----
-COPY renv.lock renv.lock
-COPY renv/ renv/
+COPY renv.lock ./NAAED-App/renv.lock
+COPY renv/ ./NAAED-App/renv/
 
 # ---- Restore R packages ----
 ENV RENV_PATHS_CACHE=/renv/cache
