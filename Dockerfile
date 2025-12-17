@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y \
 
 
 # # ---- remove shiny-server template apps --- 
-# RUN rm -rf /srv/shiny-server/*
+RUN rm -rf /srv/shiny-server/*
 
 # ---- ops for got to install renv ---- 
 RUN R -e "install.packages(c('renv', 'pak'), repos = 'https://cran.rstudio.com')"
@@ -59,10 +59,11 @@ RUN R -e "renv::restore()"
 
 
 # Copy app files
-COPY app.R /srv/shiny-server/NAAED-App/app.R
-COPY www /srv/shiny-server/NAAED-App/www
-COPY data /srv/shiny-server/NAAED-App/data
-COPY modules /srv/shiny-server/NAAED-App/modules
+COPY app.R app.R
+COPY www/ www/
+COPY data/ data/
+COPY modules/ modules/
+# copy shiny-server config file 
 COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
 
 # ---- change file ownership and rew -----
