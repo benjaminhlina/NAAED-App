@@ -1,7 +1,14 @@
 
 <!-- badges: start -->
-![Docker Build Status](https://github.com/benjaminhlina/naaed-app/actions/workflows/build_docker.yaml/badge.svg)
-![Deployed App Status](https://github.com/benjaminhlina/naaed-app/actions/workflows/deploy_shiny.yaml/badge.svg)
+[![Docker Build Status](https://github.com/benjaminhlina/naaed-app/actions/workflows/build_docker.yaml/badge.svg)](
+https://github.com/benjaminhlina/naaed-app/actions/workflows/build_docker.yaml
+)
+[![Deploy to AWS](https://github.com/benjaminhlina/naaed-app/actions/workflows/deploy_shiny.yaml/badge.svg)](
+    https://github.com/benjaminhlina/naaed-app/actions/workflows/deploy_shiny.yaml
+)
+[![Deployed App Status](https://github.com/benjaminhlina/naaed-app/actions/workflows/check_shiny_status.yaml/badge.svg)](
+    https://github.com/benjaminhlina/naaed-app/actions/workflows/check_shiny_status.yaml
+)
 
 
 <!-- badges: end -->
