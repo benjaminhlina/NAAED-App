@@ -28,20 +28,20 @@ credentials <- data.frame(
 
 ui <- dashboardPage(
   # ----- title -----
-  dashboardHeader(title = "North American Aquatic Energy Density Toolbox",
+  dashboardHeader(title = "Aquatic Tissue Library for Analyses & Synthesis (ATLAS)",
                   titleWidth = 500),
   # ---- sidebar -----
   dashboardSidebar(
     sidebarMenu(
       id = "tabs",
       menuItem("Home", tabName = "home", icon = icon("home")),
-      menuItem("View Data",tabName = "view_data", icon = icon("table")),
       menuItem("Map", tabName = "view_map", icon = icon("map")),
-      menuItem("Upload Data", tabName = "insert_data", icon = icon("plus")),
       menuItem("Summmary", tabName = "summary_info", icon = icon("bar-chart")),
       menuItem("Scatter Plot", tabName = "scatter_plot",
                icon = icon("chart-line")
-      )
+      ),
+      menuItem("View Data",tabName = "view_data", icon = icon("table")),
+      menuItem("Upload Data", tabName = "insert_data", icon = icon("plus"))
     ),
     useShinyjs(),
     # Modularized panels
@@ -58,11 +58,11 @@ ui <- dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(tabName = "home", home_tab_ui("home")),
-      tabItem(tabName = "view_data", view_data_ui("view_data")),
       tabItem(tabName = "view_map", view_map_ui("view_map")),
-      tabItem(tabName = "insert_data", upload_data_ui("insert_data")),
       tabItem(tabName = "summary_info", view_summary_info_ui("summary_info")),
-      tabItem(tabName = "scatter_plot", view_scatter_plot_ui("scatter_plot"))
+      tabItem(tabName = "scatter_plot", view_scatter_plot_ui("scatter_plot")),
+      tabItem(tabName = "view_data", view_data_ui("view_data")),
+      tabItem(tabName = "insert_data", upload_data_ui("insert_data"))
     )
   )
 )
@@ -77,7 +77,7 @@ ui <- secure_app(
 
   # Customize the login page appearance
   tags_top = tags$div(
-    tags$h2("North American Aquatic Energy Density Toolbox",
+    tags$h2("Aquatic Tissue Library for Analyses & Synthesis (ATLAS)",
             style = "text-align: center; color: #2c3e50; margin-bottom: 20px;"),
     tags$img(
       src = "logo/glfc-logo.png",
@@ -106,12 +106,9 @@ server <- function(input, output, session) {
   res_auth <- secure_server(
     check_credentials = check_credentials(credentials)
   )
-  # ----- get tables -----
-  view_data_server("view_data", con)
+
   # ---- get map -----
   view_map_server("view_map", con)
-  # ---- upload data -----
-  upload_data_server("insert_data", con)
   # ----- summary table -----
   summary_sidebar_vals <- summary_sidebar_server("summary_sidebar", con,
                                                  main_input = input)
@@ -133,6 +130,11 @@ server <- function(input, output, session) {
     con,
     main_input = input,
     scatter_sidebar_vals = scatter_sidebar_vals)
+  # ----- get tables -----
+  view_data_server("view_data", con)
+
+  # ---- upload data -----
+  upload_data_server("insert_data", con)
 
   ram_tracker()
 }
