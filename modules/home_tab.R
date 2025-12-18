@@ -28,11 +28,13 @@ home_tab_ui <- function(id) {
         width = 6,
         status = "info",
         solidHeader = TRUE,
-        shiny::p("The North American Aquatic Energy Density Toolbox
-          contains data on energy densities of fish and other
-          aquatic organisms collected across North America.
+        shiny::p("The Aquatic Tissue Library for Analyses & Synthesis (ATLAS)
+          contains data on energy density, proximate composition,
+          and stable isotopes for fish and aquatic invertebrats
+          collected across North America.
           The data helps researchers and managers understand
-          ecosystem health and food web dynamics."),
+          ecosystem health, bioenergtics, enegery transfer, and food web d
+                 ynamics."),
         tags$ul(
           tags$li("Data templates can be found at the following links."),
           tags$li("If you would like to contribute to this toolbox,
