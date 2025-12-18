@@ -36,13 +36,21 @@ home_tab_ui <- function(id) {
           ecosystem health, bioenergtics, enegery transfer, and food web d
                  ynamics."),
         tags$ul(
-          tags$li("Data templates can be found at the following links."),
-          tags$li("If you would like to contribute to this toolbox,
-                  please contact the NAAEDT manager at:",
-                  tags$a(href = "mailto:benjamin.hlina@gmail.com",
-                         "benjamin.hlina@gmail.com")),
-          tags$li("Any questions can be directed to the NAAEDT
-                  manager at: benjamin.hlina@gmail.com.")
+          tags$li(
+            tags$span("Data entry templates can be found by "),
+            tags$a(
+              "clicking here",
+              href = "data-entry-template/ATLAS_data_entry_template_v12.xlsx",
+              download = "ATLAS_data_entry_template_v12.xlsx"
+            ),
+            tags$span(" and in the documentation pane.")
+          ),
+          tags$li("If you would like to contribute to this database,
+          please create a username using your email address on the data upload
+                  pane and wait for registeration code to be sent to you."),
+          tags$li("Any quesations can be directed to the ATLAS
+                  manager at:", tags$a(href = "mailto:benjamin.hlina@gmail.com",
+                                     "benjamin.hlina@gmail.com"))
         )
       )
     )
