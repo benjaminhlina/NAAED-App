@@ -16,13 +16,13 @@ get_good_groups <- function(df) {
     "Common Name",
     "Scientific Name",
     "Genus",
-    "tribe",
-    "subfamily",
+    "Tribe",
+    "Subfamily",
     "Family",
-    "superfamily",
-    "suborder",
+    "Superfamily",
+    "Suborder",
     "Order",
-    "superorder",
+    "Superorder",
     "Class",
     "Superclass",
     "TSN code",
@@ -114,7 +114,7 @@ get_selected_table <- function(input) {
 
 get_summary_data <- function(con, selected_vars = NULL, debug_sql = FALSE) {
 
-  req(con, is.null(selected_vars))
+  req(con)
 
   cli::cli_inform(c(
     "v" = "Starting summary data query.",
@@ -122,7 +122,15 @@ get_summary_data <- function(con, selected_vars = NULL, debug_sql = FALSE) {
   ))
 
   # Always start from samples
+  # --grab location
+  tbl_loc <- tbl(con, "tbl_location")
+  # ---- grab sampels
   df <- tbl(con, "tbl_samples")
+
+  df <- df |>
+    left_join(
+      tbl_loc
+    )
 
   needed_tables <- setdiff(get_tables_needed(con = con,
                                              vars = selected_vars),
@@ -134,7 +142,7 @@ get_summary_data <- function(con, selected_vars = NULL, debug_sql = FALSE) {
 
   # Select only requested columns (plus keys if needed)
   df <- df |>
-    select(any_of(selected_vars))
+    select(waterbody, scientific_name, any_of(selected_vars))
   } else {
     df
   }
