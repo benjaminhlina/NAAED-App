@@ -91,6 +91,16 @@ get_numeric_cols <- function(df) {
   setdiff(cols, default_exclude)
 }
 
+get_numeric_vars <- function(con) {
+  get_column_map(con) |>
+    dplyr::filter(
+      field_class %in% c("integer", "numeric", "double")
+    )  |>
+    distinct(field_name) |>
+    arrange(field_name) |>
+    dplyr::pull(field_name)
+}
+
 # ---- Helper: determine which table is selected ----
 get_selected_table <- function(input) {
   current_tab <- input$tabs
